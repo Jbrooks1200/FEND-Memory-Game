@@ -1,7 +1,7 @@
 let openCards = [];
 let moves = 0; //Current number of moves the user has made.
 let matches = 0; //Current number of matches the user has made.
-let totalMatches = 2; //Total number of possible matches. Used to determine when the game is over.
+let totalMatches = 8; //Total number of possible matches. Used to determine when the game is over.
 let allowClick = true; //This helps prevent an accidental double-click while waiting for the no-match timer.
 let deck = document.querySelector(".deck"); 
 let timerOff = true;
@@ -10,7 +10,6 @@ let timerOff = true;
 function startGame() {
   shuffleDeck();
   console.log('shuffle') 
-  //removeClasses();
   resetStars();
   
   // reset moves 
@@ -18,15 +17,24 @@ function startGame() {
   moveCount.innerHTML = moves; 
   
   //reset timer 
+  /*
+  clearInterval(interval);
   var timer = document.querySelector(".timer"); timer.innerHTML = "0 mins 0 secs"; 
-  clearInterval(interval); 
-  openCards = [];
-  matches = 0;
+  stopTimer();
+  seconds = 0;
+  minutes = 0;
+  timerOff = true; 
+  */
+  clearInterval(interval); second = 0; minute = 0; timer.innerHTML = "0 mins 0 secs" 
+  setTimeout(function wait(){ startTimer(); },1000);
+
+
   
   // remove all existing classes from each card 
   let card = document.getElementsByClassName("card");
   cards = [...card] 
-
+  
+  //removeClasses();
   for (var i = 0; i < cards.length; i++){ 
     deck.innerHTML = ""; 
     [].forEach.call(cards, function(item) { 
@@ -36,12 +44,12 @@ function startGame() {
     cards[i].classList.remove("show", "open", "match", "disabled"); }
     
     document.querySelector(".modal-overlay").style.display = "none";
-  /*
-  // reset star rating
-  for (var i= 0; i < stars.length; i++){ stars[i].style.color = "#FFD700"; stars[i].style.visibility = "visible"; }
-  */
+    
+    //clear array and matches
+    openCards = [];
+    matches = 0;
+
 }; 
-//Above update to the function shuffles deck , removes existing classes, resets the timer, star rating and number of moves
 
 document.addEventListener('DOMContentLoaded', function(){
   startGame();
@@ -57,7 +65,7 @@ function startTimer() {
     second++; 
     if(second == 60){ minute++; second = 0; } 
     if(minute == 60){ hour++; minute = 0; } },1000); 
-  };
+};
     
 function stopTimer() {
   clearInterval(interval); //You have to pass in the VARIABLE assigned to the setInterval() method.
@@ -70,7 +78,7 @@ function moveCounter() {
   if(moves == 1){ second = 0; minute = 0; hour = 0; startTimer(); } 
   //We would update the moveCounter function to start timer on first move.
 }
-    
+  
     
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -121,6 +129,8 @@ function addOpenedCard(cardClicked) {
   
   if (len == 2) { //See if the user has opened the second card
     starRating();
+    moves++;  //Update the number of moves made 
+    document.querySelector("#moveCount").innerHTML = moves; //Updates the screen with the number of moves
     //Must user the array index followed by the <li> index to get the class name
     if (openCards[0].firstElementChild.className === openCards[1].firstElementChild.className) {
       matched();
@@ -129,8 +139,6 @@ function addOpenedCard(cardClicked) {
       allowClick = false;
       notMatched();
     }
-    moves++;  //Update the number of moves made 
-    document.querySelector("#moveCount").innerHTML = moves; //Updates the screen with the number of moves
   }
 };
     
@@ -145,7 +153,6 @@ function matched() {
   openCards = [];
   if (matches == totalMatches) {
     modalStats(); 
-    timerOff = true;
   }  
 };
     
@@ -170,7 +177,7 @@ function notMatched() {
     
 //Removes stars based on the number of moves.
 function starRating () {
-  if (moves == 1 || moves == 2) {
+  if (moves == 12 || moves == 20) {
     removeStar();
   }
 };
@@ -201,7 +208,7 @@ function resetStars() {
 }
 
 function modalStats() { 
-  if (totalMatches = 2){
+  if (totalMatches = 8){
     stopTimer();
     finalTime = timer.innerHTML;
     
@@ -222,3 +229,4 @@ function modalStats() {
  
 document.querySelector(".restart").addEventListener("click", startGame);
 document.querySelector("#anotherRound").addEventListener("click", startGame);
+
