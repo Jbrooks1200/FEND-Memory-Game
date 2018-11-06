@@ -9,7 +9,6 @@ let timerOff = true;
 
 function startGame() {
   shuffleDeck();
-  console.log('shuffle') 
   resetStars();
   
   // reset moves 
@@ -26,7 +25,7 @@ function startGame() {
   timerOff = true; 
   */
   clearInterval(interval); second = 0; minute = 0; timer.innerHTML = "0 mins 0 secs" 
-  setTimeout(function wait(){ startTimer(); },1000);
+  setTimeout(function wait(){ startTimer(); });
 
 
   
@@ -75,8 +74,7 @@ function moveCounter() {
   moves++; 
   moveCount.innerHTML = moves; 
   //start timer on first move 
-  if(moves == 1){ second = 0; minute = 0; hour = 0; startTimer(); } 
-  //We would update the moveCounter function to start timer on first move.
+  //if(moves == 1){ second = 0; minute = 0; hour = 0; startTimer(); } 
 }
   
     
