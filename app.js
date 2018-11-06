@@ -226,5 +226,5 @@ function modalStats() {
 }
  
 document.querySelector(".restart").addEventListener("click", startGame);
-document.querySelector("#anotherRound").addEventListener("click", startGame);
+//document.querySelector("#anotherRound").addEventListener("click", startGame);
 
