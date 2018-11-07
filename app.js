@@ -16,14 +16,6 @@ function startGame() {
   moveCount.innerHTML = moves; 
   
   //reset timer 
-  /*
-  clearInterval(interval);
-  var timer = document.querySelector(".timer"); timer.innerHTML = "0 mins 0 secs"; 
-  stopTimer();
-  seconds = 0;
-  minutes = 0;
-  timerOff = true; 
-  */
   clearInterval(interval); second = 0; minute = 0; timer.innerHTML = "0 mins 0 secs" 
   setTimeout(function wait(){ startTimer(); });
 
@@ -107,10 +99,6 @@ const cardContainer = document.querySelector(".deck");
 cardContainer.addEventListener("click", function(e){
   const cardClicked = e.target; 
   if (cardClicked.classList.contains("card")) {
-    if (timerOff) {
-      startTimer();
-      timerOff = false;
-    }
     if (!allowClick) return;
     cardClicked.classList.add("open");
     cardClicked.classList.add("show");
@@ -144,7 +132,7 @@ function matched() {
   //Just a loop to update both indexes
   for (let i = 0; i <= 1; i++) {
     openCards[i].classList.add("match");
-    openCards[i].classList.add("disable");
+    openCards[i].classList.add("disabled");
     openCards[i].classList.remove("show");
   }
   matches++;
@@ -157,8 +145,8 @@ function matched() {
 function notMatched() {
   openCards[0].classList.add("unmatched");
   openCards[1].classList.add("unmatched");
-  openCards[0].classList.remove("disable");
-  openCards[1].classList.remove("disable");
+  openCards[0].classList.remove("disabled");
+  openCards[1].classList.remove("disabled");
   
   //This is the timer that shows the no-match cards for 1/2 second to give visual feedback and then resets them back to their original state.
   setTimeout(function() {
@@ -193,7 +181,7 @@ function removeStar() {
 function removeClasses() {
   let cards = document.querySelectorAll(".card i")
   for (var i = 0; i < cards.length; i++) {
-    document.querySelector(".card").classList.remove("open", "show", "match", "disable")	
+    document.querySelector(".card").classList.remove("open", "show", "match", "disabled")	
     console.log('inside remove classes')
   } 
 }
